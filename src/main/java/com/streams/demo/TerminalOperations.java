@@ -42,14 +42,14 @@ public class TerminalOperations {
 
         //8. Min/Max
         Optional<Integer> max1 = Stream.of(2, 44, 305).max(Comparator.naturalOrder());
-        System.out.println("max1: "+max1);
+        System.out.println("max1: " + max1);
         Optional<Integer> max2 = Stream.of(2, 44, 305).max((x, y) -> x - y);
-        System.out.println("max2: "+max2);
+        System.out.println("max2: " + max2);
 
         Optional<Integer> max3 = Stream.of(2, 44, 305).max(Comparator.reverseOrder());
-        System.out.println("max3: "+max3);
+        System.out.println("max3: " + max3);
         Optional<Integer> max4 = Stream.of(2, 44, 305).max((x, y) -> y - x);
-        System.out.println("max4: "+max4);
+        System.out.println("max4: " + max4);
 
         //Examples:Filtering and Selecting names
         List<String> names = Arrays.asList("Anna", "Bob", "Charlie", "David");
@@ -67,9 +67,20 @@ public class TerminalOperations {
         //Arrays.stream(sentenceCharArray); --> compilation fails because Arrays.stream doesn't support char[]
         sentence.chars().filter(x -> x == 'l').count();
 
+        //9. forEachOrdered
+
         //Example
         Stream<String> nameStream = names.stream();
         nameStream.forEach(System.out::println);
+        //nameStream.map(String::toUpperCase).toList(); //EXCEPTION THROWN : IllegalStateException
+        // - stream has already been operated upon or closed
+
+        List<Integer> randomNumbers = Arrays.asList(1, 5, 16, 23, 30);
+        System.out.println("Using forEach with parallel stream");
+        randomNumbers.parallelStream().forEach(System.out::println);
+        System.out.println("Using forEachOrdered with parallel stream");
+        //observer how parallelStream is used to reuse the stream
+        randomNumbers.parallelStream().forEachOrdered(System.out::println);
 
         //stateful & stateless operation
         //check the class LazyEvaluationDemo
